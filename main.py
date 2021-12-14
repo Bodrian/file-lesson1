@@ -1,23 +1,24 @@
 def create_dict(file):
 
     def dict_unit():
-        ingridient = []
-        recept_dict = {}
+        ingridient_dic = []
         for line in range(int(file.readline())):
-            ingridient.append(file.readline().split('|'))
-            recept_dict['ingredient_name'] = ingridient[line][0]
-            recept_dict['quantity'] = ingridient[line][1]
-            recept_dict['measure'] = ingridient[line][2].strip('\n')
+            recept_dict = {}
+            ingridient = (file.readline().split('|'))
+            recept_dict['ingredient_name'] = ingridient[0]
+            recept_dict['quantity'] = int(ingridient[1].strip())
+            recept_dict['measure'] = ingridient[2].strip('\n')
             ingridient_dic.append(recept_dict)
-        file.readline()
         return ingridient_dic
 
     cook_book = {}
     with open(file, 'r', encoding='UTF-8') as file:
-        for line in file:
-            name_eat = line
-            ingridient_dic = []
+        while True:
+            name_eat = file.readline()
+            if not name_eat:
+                break
             cook_book[name_eat.strip('\n')] = dict_unit()
+            file.readline()
     return cook_book
 
 file = 'recipes.txt'
